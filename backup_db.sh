@@ -31,7 +31,7 @@ for i in "${DBNAME[@]}"; do
     cd ${i};
 
     # create sql dump db (if correct)
-    mysqldump --skip-dump-date -u roots -p`< ${password}` ${i} > ${file_name}
+    mysqldump --skip-dump-date -u ${user} -p`< ${password}` ${i} > ${file_name}
 
     # check git
     if !(git status &> /dev/null)

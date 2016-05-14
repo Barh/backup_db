@@ -31,18 +31,17 @@ for i in "${DBNAME[@]}"; do
     cd ${i};
 
     # create sql dump db (if correct)
-    if !(mysqldump --skip-dump-date -u root -p`< ${password}` ${i} > ${file_name})
-    then
-        # check git
-        if !(git status &> /dev/null)
-        then # no is
-            # init git
-            git init &> /dev/null
-            # add file
-            git add ${file_name} &> /dev/null
-        fi
+    mysqldump --skip-dump-date -u roots -p`< ${password}` ${i} > ${file_name}
 
-        # commit
-        git commit -am $commit_name &> /dev/null
+    # check git
+    if !(git status &> /dev/null)
+    then # no is
+        # init git
+        git init &> /dev/null
+        # add file
+        git add ${file_name} &> /dev/null
     fi
+
+    # commit
+    git commit -am $commit_name &> /dev/null
 done

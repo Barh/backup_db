@@ -1,7 +1,10 @@
 #!/bin/bash
 
+# directory script
+dir_script="$(dirname "$0")"
+
 # settings
-source 'settings.sh'
+source ${dir_script}'/settings.sh'
 
 # get db names
 DBNAME=($(mysqlshow -u ${user} -p`< ${password}` | sed -e '1,3d' -e '$d' | awk '{print $2}'))
@@ -31,7 +34,7 @@ for i in "${DBNAME[@]}"; do
     cd ${i};
 
     # create sql dump db (if correct)
-    if !(mysqldump --skip-dump-date -u ${user} -p`< ${password}` ${i} > ${file_name})
+    if (mysqldump --skip-dump-date -u ${user} -p`< ${password}` ${i} > ${file_name})
     then
         # check git
         if !(git status &> /dev/null)
